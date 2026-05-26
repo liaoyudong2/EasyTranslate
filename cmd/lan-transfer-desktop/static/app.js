@@ -62,6 +62,9 @@ pickDirBtn.addEventListener("click", async () => {
     dirInput.value = Array.isArray(selected) ? selected[0] : selected;
     await saveConfig(true);
   } catch (error) {
+    if (isDialogCancelled(error)) {
+      return;
+    }
     showToast(error.message || "选择目录失败");
   }
 });
@@ -146,6 +149,10 @@ function showToast(message) {
   toast.classList.remove("hidden");
   window.clearTimeout(showToast.timer);
   showToast.timer = window.setTimeout(() => toast.classList.add("hidden"), 2400);
+}
+
+function isDialogCancelled(error) {
+  return /cancelled by user|canceled by user/i.test(error?.message || "");
 }
 
 refresh().catch((error) => showToast(error.message || "初始化失败"));
