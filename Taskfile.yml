@@ -1,0 +1,60 @@
+version: "3"
+
+vars:
+  APP_NAME: "简传"
+  BIN_DIR: "bin"
+  EXECUTABLE: "lan-transfer-desktop"
+
+tasks:
+  build:
+    desc: "Build the Wails desktop binary"
+    cmds:
+      - mkdir -p "{{.BIN_DIR}}"
+      - go build -tags wails -o "{{.BIN_DIR}}/{{.EXECUTABLE}}" ./cmd/lan-transfer-desktop
+
+  package:
+    desc: "Package the desktop app for the current platform"
+    cmds:
+      - go run ./scripts/package.go
+
+  run:
+    desc: "Run the packaged desktop binary"
+    deps:
+      - build
+    cmds:
+      - "{{.BIN_DIR}}/{{.EXECUTABLE}}"
+
+  dev:
+    desc: "Run the desktop app in development mode"
+    cmds:
+      - go run -tags wails ./cmd/lan-transfer-desktop
+
+  package:macos:
+    desc: "Package the macOS desktop app"
+    cmds:
+      - go run ./scripts/package.go -target macos
+
+  darwin:package:
+    desc: "Wails-compatible macOS package task"
+    cmds:
+      - go run ./scripts/package.go -target macos
+
+  package:windows:
+    desc: "Package the Windows desktop app"
+    cmds:
+      - go run ./scripts/package.go -target windows
+
+  windows:package:
+    desc: "Wails-compatible Windows package task"
+    cmds:
+      - go run ./scripts/package.go -target windows
+
+  package:linux:
+    desc: "Package the Linux desktop app"
+    cmds:
+      - go run ./scripts/package.go -target linux
+
+  linux:package:
+    desc: "Wails-compatible Linux package task"
+    cmds:
+      - go run ./scripts/package.go -target linux

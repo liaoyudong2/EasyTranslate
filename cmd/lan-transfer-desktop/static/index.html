@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>简传</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <section class="status-panel">
+        <div>
+          <p class="eyebrow">简传</p>
+          <h1 id="stateText">未启动</h1>
+          <p id="stateSub">点击启动后，其他设备可通过浏览器访问。</p>
+        </div>
+        <button id="toggleBtn" type="button">启动服务</button>
+      </section>
+
+      <section class="grid">
+        <div class="panel">
+          <div class="panel-title">
+            <h2>访问入口</h2>
+            <button id="openBtn" class="ghost" type="button">打开浏览器</button>
+          </div>
+          <div id="urlList" class="url-list"></div>
+          <div class="code-row">
+            <span>访问码</span>
+            <strong id="accessCode">------</strong>
+          </div>
+          <img id="qrImage" class="qr hidden" alt="访问二维码" />
+        </div>
+
+        <div class="panel">
+          <div class="panel-title">
+            <h2>设置</h2>
+            <button id="saveBtn" class="ghost" type="button">保存</button>
+          </div>
+          <label>
+            <span>端口</span>
+            <input id="portInput" type="number" min="1" max="65535" />
+          </label>
+          <label>
+            <span>保存目录</span>
+            <div class="path-row">
+              <input id="dirInput" type="text" />
+              <button id="pickDirBtn" class="ghost" type="button">选择</button>
+            </div>
+          </label>
+          <label>
+            <span>访问码</span>
+            <input id="codeInput" type="text" />
+          </label>
+          <label class="check">
+            <input id="autoStartInput" type="checkbox" />
+            <span>启动 App 时自动开启服务</span>
+          </label>
+          <label class="check">
+            <input id="rememberCodeInput" type="checkbox" />
+            <span>记住自定义访问码</span>
+          </label>
+        </div>
+      </section>
+      <div id="toast" class="toast hidden"></div>
+    </main>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

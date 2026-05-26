@@ -1,0 +1,285 @@
+:root {
+  color-scheme: light;
+  --bg: #f6f7f2;
+  --text: #1f2a24;
+  --muted: #617064;
+  --line: #d9dfd3;
+  --panel: #ffffff;
+  --accent: #087f5b;
+  --accent-dark: #066548;
+  --danger: #c92a2a;
+  --shadow: 0 16px 44px rgba(31, 42, 36, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  border: 0;
+  border-radius: 8px;
+  padding: 10px 16px;
+  color: #fff;
+  background: var(--accent);
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--accent-dark);
+}
+
+button.ghost {
+  color: var(--text);
+  background: transparent;
+  border: 1px solid var(--line);
+}
+
+button.ghost:hover {
+  background: #eef2ea;
+}
+
+.shell {
+  width: min(920px, calc(100vw - 32px));
+  margin: 0 auto;
+  padding: 32px 0;
+}
+
+.topbar,
+.login-panel,
+.file-section {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 24px;
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+h1 {
+  font-size: 28px;
+  line-height: 1.2;
+}
+
+h2 {
+  font-size: 18px;
+}
+
+.topbar p,
+.drop-zone span,
+.empty,
+.meta {
+  color: var(--muted);
+}
+
+.login-panel {
+  margin-top: 18px;
+  padding: 24px;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.inline {
+  display: flex;
+  gap: 10px;
+}
+
+input[type="text"],
+input:not([type]) {
+  min-width: 0;
+}
+
+#codeInput {
+  flex: 1;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 11px 12px;
+}
+
+.drop-zone {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 190px;
+  margin-top: 18px;
+  border: 2px dashed #96b5a8;
+  border-radius: 8px;
+  background: #ffffff;
+  text-align: center;
+}
+
+.drop-zone.dragover {
+  border-color: var(--accent);
+  background: #eef8f3;
+}
+
+.drop-zone input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.drop-zone strong,
+.drop-zone span {
+  display: block;
+}
+
+.drop-zone strong {
+  margin-bottom: 8px;
+  font-size: 20px;
+}
+
+.progress {
+  height: 10px;
+  overflow: hidden;
+  margin-top: 14px;
+  border-radius: 999px;
+  background: #dfe7dd;
+}
+
+.progress div {
+  width: 0;
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.2s ease;
+}
+
+.file-section {
+  margin-top: 18px;
+  padding: 18px;
+}
+
+.section-title,
+.file-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.file-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.file-row {
+  min-height: 64px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfcfa;
+}
+
+.file-name {
+  overflow-wrap: anywhere;
+  font-weight: 700;
+}
+
+.actions {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 8px;
+}
+
+.actions a,
+.actions button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  border-radius: 8px;
+  padding: 8px 12px;
+  text-decoration: none;
+}
+
+.actions a {
+  color: #fff;
+  background: var(--accent);
+}
+
+.actions .delete {
+  color: var(--danger);
+  background: transparent;
+  border: 1px solid #f0b6b6;
+}
+
+.empty {
+  padding: 28px 0 12px;
+  text-align: center;
+}
+
+.error {
+  min-height: 22px;
+  margin-top: 10px;
+  color: var(--danger);
+}
+
+.toast {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  max-width: min(420px, calc(100vw - 36px));
+  padding: 12px 14px;
+  border-radius: 8px;
+  color: #fff;
+  background: #26322c;
+  box-shadow: var(--shadow);
+}
+
+.hidden {
+  display: none !important;
+}
+
+@media (max-width: 640px) {
+  .shell {
+    width: min(100vw - 20px, 920px);
+    padding: 10px 0;
+  }
+
+  .topbar,
+  .section-title,
+  .file-row,
+  .inline {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .actions {
+    width: 100%;
+  }
+
+  .actions a,
+  .actions button {
+    justify-content: center;
+    flex: 1;
+  }
+}
