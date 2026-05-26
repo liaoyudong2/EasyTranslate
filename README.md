@@ -86,7 +86,7 @@ dist/简传-macos-arm64.zip
 - 打开浏览器传输页
 - 提供托盘菜单入口
 
-桌面图标源文件位于 `build/assets/app-icon.svg`，打包时会自动生成 macOS `AppIcon.icns` 并写入 `.app`。
+桌面图标源文件位于 `build/assets/app-icon.svg`。打包时会自动生成 macOS `AppIcon.icns`，Windows 打包会生成临时 `.syso` 资源并把图标、版本信息和 manifest 写入 `.exe`。
 
 ## 测试
 

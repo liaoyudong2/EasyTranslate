@@ -2,3 +2,6 @@
 bin/
 data/
 dist/
+*.syso
+build/darwin/AppIcon.icns
+build/darwin/AppIcon.iconset/
