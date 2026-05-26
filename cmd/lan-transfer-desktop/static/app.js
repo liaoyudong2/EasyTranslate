@@ -45,11 +45,12 @@ saveBtn.addEventListener("click", () => saveConfig(true));
 
 pickDirBtn.addEventListener("click", async () => {
   try {
+    const directory = await call("PrepareDirectoryPicker", dirInput.value.trim());
     const selected = await Dialogs.OpenFile({
       Title: "选择保存目录",
       Message: "上传文件会保存到这个目录",
       ButtonText: "选择",
-      Directory: dirInput.value.trim() || undefined,
+      Directory: directory || undefined,
       CanChooseDirectories: true,
       CanChooseFiles: false,
       CanCreateDirectories: true,
