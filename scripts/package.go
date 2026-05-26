@@ -28,6 +28,8 @@ const (
 	appDescription = "局域网文件传输工具"
 	appVersion     = "0.1.0"
 	executable     = "lan-transfer-desktop"
+
+	windowsWailsAppIconID = 3
 )
 
 type options struct {
@@ -306,14 +308,35 @@ func ensureWindowsResource(root, arch string) (string, error) {
 		return "", err
 	}
 
-	icon, err := winres.NewIconFromResizedImage(renderAppIcon(1024), []int{256, 128, 64, 48, 32, 16})
+	rs, err := newWindowsResourceSet()
 	if err != nil {
 		return "", err
 	}
 
-	rs := winres.ResourceSet{}
-	if err := rs.SetIcon(winres.ID(1), icon); err != nil {
+	resourcePath := filepath.Join(root, "cmd", "lan-transfer-desktop", fmt.Sprintf("rsrc_windows_%s.syso", arch))
+	out, err := os.Create(resourcePath)
+	if err != nil {
 		return "", err
+	}
+	if err := rs.WriteObject(out, targetArch); err != nil {
+		_ = out.Close()
+		return "", err
+	}
+	if err := out.Close(); err != nil {
+		return "", err
+	}
+	return resourcePath, nil
+}
+
+func newWindowsResourceSet() (*winres.ResourceSet, error) {
+	icon, err := winres.NewIconFromResizedImage(renderAppIcon(1024), []int{256, 128, 64, 48, 32, 16})
+	if err != nil {
+		return nil, err
+	}
+
+	rs := &winres.ResourceSet{}
+	if err := rs.SetIcon(winres.ID(windowsWailsAppIconID), icon); err != nil {
+		return nil, err
 	}
 
 	vi := version.Info{
@@ -331,7 +354,7 @@ func ensureWindowsResource(root, arch string) (string, error) {
 	}
 	for key, value := range versionFields {
 		if err := vi.Set(version.LangDefault, key, value); err != nil {
-			return "", err
+			return nil, err
 		}
 	}
 	rs.SetVersionInfo(vi)
@@ -346,20 +369,7 @@ func ensureWindowsResource(root, arch string) (string, error) {
 		LongPathAware:       true,
 		UseCommonControlsV6: true,
 	})
-
-	resourcePath := filepath.Join(root, "cmd", "lan-transfer-desktop", fmt.Sprintf("rsrc_windows_%s.syso", arch))
-	out, err := os.Create(resourcePath)
-	if err != nil {
-		return "", err
-	}
-	if err := rs.WriteObject(out, targetArch); err != nil {
-		_ = out.Close()
-		return "", err
-	}
-	if err := out.Close(); err != nil {
-		return "", err
-	}
-	return resourcePath, nil
+	return rs, nil
 }
 
 func windowsResourceArch(arch string) (winres.Arch, error) {
